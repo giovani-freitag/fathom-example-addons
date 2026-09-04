@@ -1,8 +1,12 @@
 name: pages
 
+# On main rather than on a tag. A release-please tag is pushed with the
+# workflow token, which by design triggers nothing, so a tag trigger here would
+# never fire on the releases it was written for. The site is the source as it is
+# committed, and main is where that lives.
 on:
   push:
-    tags: ['v*']
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -29,7 +33,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      # Turned on from here, so a fresh clone of this repository publishes
+      # without somebody having to find the setting first.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
