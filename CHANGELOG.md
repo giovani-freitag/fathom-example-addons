@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/giovani-freitag/fathom-example-addons/compare/v1.4.0...v1.5.0) (2026-09-04)
+
+
+### Features
+
+* let the examples page read in Portuguese or English ([3e60abe](https://github.com/giovani-freitag/fathom-example-addons/commit/3e60abe6de25596e2bead23844c046cd467edd98))
+
 ## [1.4.0](https://github.com/giovani-freitag/fathom-example-addons/compare/v1.3.0...v1.4.0) (2026-09-04)
 
 
