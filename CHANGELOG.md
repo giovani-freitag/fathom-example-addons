@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.4.0](https://github.com/giovani-freitag/fathom-example-addons/compare/v1.3.0...v1.4.0) (2026-09-04)
+
+
+### Features
+
+* let the coarser mean shade the zone between its lines ([0064c86](https://github.com/giovani-freitag/fathom-example-addons/commit/0064c86c38016c8a61e463db800ae50c1b2deaf8))
+* offer the minute rung the coarser mean was missing ([e765b90](https://github.com/giovani-freitag/fathom-example-addons/commit/e765b908da4f058f2e3f4a667ab578dd3c25f9a9))
+
+
+### Bug Fixes
+
+* name the shading by the method that draws it ([ccf7b71](https://github.com/giovani-freitag/fathom-example-addons/commit/ccf7b714af63b7bb8057864c18c3b61f291ac920))
+
 ## [1.3.0](https://github.com/giovani-freitag/fathom-example-addons/compare/v1.2.0...v1.3.0) (2026-09-04)
 
 
