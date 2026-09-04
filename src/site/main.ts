@@ -78,7 +78,7 @@ function renderChrome(): void {
     const guide = document.querySelector<HTMLAnchorElement>('#guide');
     if (guide !== null) {
         guide.href = language === 'en'
-            ? 'https://giovani-freitag.github.io/fathom/guide/writing-a-reading'
+            ? 'https://giovani-freitag.github.io/fathom/guide/en/writing-a-reading'
             : 'https://giovani-freitag.github.io/fathom/guide/pt-BR/writing-a-reading';
     }
 }

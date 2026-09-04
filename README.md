@@ -108,7 +108,7 @@ the page that reads them, bundled by Vite 8, which bundles with Rolldown.
 
 ## ✏️ Writing your own
 
-The [**guide**](https://giovani-freitag.github.io/fathom/guide/writing-a-reading)
+The [**guide**](https://giovani-freitag.github.io/fathom/guide/en/writing-a-reading)
 goes from the smallest addon that draws to the parts you reach for last, and the
 [**API reference**](https://giovani-freitag.github.io/fathom/guide/api/) is
 generated from the same types this repository is checked against.
