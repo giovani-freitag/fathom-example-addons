@@ -23,7 +23,7 @@
 
 <p align="center">
   <a href="https://giovani-freitag.github.io/fathom-addons/"><strong>Or read them here first →</strong></a><br>
-  <sub>Both files of both addons, on one page.</sub>
+  <sub>Every file of every addon, on one page.</sub>
 </p>
 
 <p align="center">
@@ -45,6 +45,18 @@ in its own band under the chart — the strip in the shot above.
 **Read it for:** an addon across two files · a numeric knob and a switch ·
 warm-up bars declared so the left edge is not blank · `NaN` where there is no
 honest answer.
+
+### 📐 [`coarser-mean`](readings/coarser-mean) — a mean of another timeframe, drawn over this one
+
+The 50-period exponential mean of a coarser rung's close, high and low, held at
+each drawn bar until that rung closes again — steps, not slopes, because the
+coarser mean did not move in between. Add a copy per timeframe: 5m through 1w,
+each with its own rung and period.
+
+**Read it for:** a coarser rung declared and its whole run read back ·
+`reachingBack` sized to the period, so a fifty-period mean gets four hundred
+closes · the forward fill that makes repainting impossible · saying the mean has
+not settled instead of drawing a line that will move.
 
 ### 🕰️ [`yesterday`](readings/yesterday) — where the last session opened, closed and turned
 
@@ -129,6 +141,6 @@ export default class Midpoint implements Indicator {
 ```
 
 Pull requests welcome, as long as `npm run check` passes and the addon teaches
-something these two do not. Commit subjects are
+something these do not. Commit subjects are
 [Conventional Commits](https://www.conventionalcommits.org) — `feat:` and `fix:`
 are what cut the next release and put the one-file bundles on it.
