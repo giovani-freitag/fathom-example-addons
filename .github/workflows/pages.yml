@@ -33,11 +33,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      # Turned on from here, so a fresh clone of this repository publishes
-      # without somebody having to find the setting first.
+      # Pages is turned on once against the repository, by hand or through the
+      # API. `enablement: true` here cannot do it: creating the site needs admin
+      # rights, and the workflow token is not given them however the permissions
+      # block is written.
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
