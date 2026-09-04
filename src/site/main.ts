@@ -1,37 +1,37 @@
 /**
- * The page that browses the readings.
+ * The page that browses the addons.
  *
  * Their source is gathered at build time rather than fetched, so the page is
  * one file with nothing to wait for and cannot drift from what is committed.
  */
 
 /** Where the repository lives, which is what Fathom is given to open. */
-const REPOSITORY = 'gh/giovani-freitag/fathom-addons';
+const REPOSITORY = 'gh/giovani-freitag/fathom-example-addons';
 
-const SOURCES: Record<string, string> = import.meta.glob('../readings/**/*.ts', {
+const SOURCES: Record<string, string> = import.meta.glob('../addons/**/*.ts', {
     query: '?raw',
     import: 'default',
     eager: true,
 });
 
-interface Reading {
+interface Addon {
     readonly name: string;
-    /** Its files, keyed by the path the reading imports them under. */
+    /** Its files, keyed by the path the addon imports them under. */
     readonly files: readonly (readonly [string, string])[];
     /** The first sentence of the entry's opening comment. */
     readonly about: string;
 }
 
 /**
- * The readings, gathered out of what the bundler inlined.
+ * The addons, gathered out of what the bundler inlined.
  *
- * @returns One entry per folder under `readings/`, entry file first.
+ * @returns One entry per folder under `src/addons/`, entry file first.
  */
-function readingsFound(): readonly Reading[] {
+function addonsFound(): readonly Addon[] {
     const byName = new Map<string, [string, string][]>();
 
     for (const [at, source] of Object.entries(SOURCES)) {
-        const found = /^\.\.\/readings\/([^/]+)\/(.+)$/.exec(at);
+        const found = /^\.\.\/addons\/([^/]+)\/(.+)$/.exec(at);
         if (found === null) {
             continue;
         }
@@ -49,19 +49,19 @@ function readingsFound(): readonly Reading[] {
         .sort((one, other) => one.name.localeCompare(other.name));
 }
 
-/** The headline out of a reading's opening comment, where it has one. */
+/** The headline out of an addon's opening comment, where it has one. */
 function aboutOf(source: string): string {
     return /^\/\/ (.+)$/m.exec(source)?.[1] ?? '';
 }
 
 function render(): void {
-    const into = document.querySelector('#readings');
+    const into = document.querySelector('#addons');
     if (into === null) {
         return;
     }
 
-    for (const reading of readingsFound()) {
-        into.append(cardFor(reading));
+    for (const addon of addonsFound()) {
+        into.append(cardFor(addon));
     }
 
     const footer = document.createElement('footer');
@@ -69,19 +69,19 @@ function render(): void {
     document.querySelector('#page')?.append(footer);
 }
 
-function cardFor(reading: Reading): HTMLElement {
+function cardFor(addon: Addon): HTMLElement {
     const card = document.createElement('article');
-    const spec = `${REPOSITORY}/readings/${reading.name}`;
+    const spec = `${REPOSITORY}/src/addons/${addon.name}`;
 
     const head = document.createElement('header');
     const title = document.createElement('h2');
-    title.textContent = reading.name;
+    title.textContent = addon.name;
     const about = document.createElement('p');
-    about.textContent = reading.about;
+    about.textContent = addon.about;
     head.append(title, about);
 
     card.append(head, specRow(spec));
-    for (const [path, source] of reading.files) {
+    for (const [path, source] of addon.files) {
         card.append(fileBlock(path, source, path === 'main.ts'));
     }
     return card;

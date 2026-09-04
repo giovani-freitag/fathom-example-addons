@@ -1,5 +1,5 @@
 {
-    "name": "fathom-addons",
+    "name": "fathom-example-addons",
     "version": "1.1.0",
     "private": true,
     "type": "module",
@@ -7,7 +7,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/giovani-freitag/fathom-addons.git"
+        "url": "git+https://github.com/giovani-freitag/fathom-example-addons.git"
     },
     "engines": {
         "node": ">=22"
@@ -15,7 +15,7 @@
     "scripts": {
         "dev": "vite",
         "build": "npm run build:bundles && vite build",
-        "build:bundles": "node --experimental-strip-types scripts/bundle-readings.ts",
+        "build:bundles": "node --experimental-strip-types scripts/bundle-addons.ts",
         "preview": "vite preview",
         "check": "npm run typecheck && npm run lint && npm run test",
         "typecheck": "tsc --noEmit",

@@ -19,5 +19,5 @@
         "allowImportingTsExtensions": true,
         "erasableSyntaxOnly": true
     },
-    "include": ["readings", "src", "scripts", "tests", "*.ts", "*.js"]
+    "include": ["src", "scripts", "tests", "*.ts", "*.js"]
 }

@@ -3,24 +3,24 @@ import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 /**
- * Gathers each reading into the one file Fathom opens it from.
+ * Gathers each addon into the one file Fathom opens it from.
  *
- * Not a bundle in the usual sense: a reading is TypeScript that Fathom's own
+ * Not a bundle in the usual sense: an addon is TypeScript that Fathom's own
  * in-page compiler reads, so bundling it into JavaScript would produce
  * something the editor could not show and nobody could learn from. What this
- * writes is every file of a reading under one envelope — the `.fathom.json`
- * shape the editor's open button takes — so a reading can be handed over as a
+ * writes is every file of an addon under one envelope — the `.fathom.json`
+ * shape the editor's open button takes — so an addon can be handed over as a
  * single file to somebody who would rather not go through a repository.
  */
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const READINGS = join(ROOT, 'readings');
+const ADDONS = join(ROOT, 'src', 'addons');
 const OUT = join(ROOT, 'dist', 'bundles');
 
 /** The envelope version. Fathom refuses anything else. */
 const FATHOM_BUNDLE = 1;
 
-/** The file Fathom takes a reading out of. */
+/** The file Fathom takes an addon out of. */
 const ENTRY_FILE = 'main.ts';
 
 interface Bundle {
@@ -32,8 +32,8 @@ interface Bundle {
 /**
  * Every `.ts` and `.tsx` file under a folder, keyed by its path within it.
  *
- * @param folder - Where the reading lives.
- * @returns Its files, named the way the reading imports them.
+ * @param folder - Where the addon lives.
+ * @returns Its files, named the way the addon imports them.
  */
 function filesUnder(folder: string): Record<string, string> {
     const found: Record<string, string> = {};
@@ -54,14 +54,14 @@ function filesUnder(folder: string): Record<string, string> {
 }
 
 function bundleOf(name: string): Bundle {
-    const files = filesUnder(join(READINGS, name));
+    const files = filesUnder(join(ADDONS, name));
     if (files[ENTRY_FILE] === undefined) {
-        throw new Error(`readings/${name} has no ${ENTRY_FILE}, so Fathom could not open it.`);
+        throw new Error(`src/addons/${name} has no ${ENTRY_FILE}, so Fathom could not open it.`);
     }
     return { fathom: FATHOM_BUNDLE, name, files };
 }
 
-const names = readdirSync(READINGS).filter((name) => statSync(join(READINGS, name)).isDirectory());
+const names = readdirSync(ADDONS).filter((name) => statSync(join(ADDONS, name)).isDirectory());
 mkdirSync(OUT, { recursive: true });
 
 for (const name of names) {
