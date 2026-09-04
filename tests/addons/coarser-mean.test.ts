@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { exponentialMean, heldPerBar } from '../../src/addons/coarser-mean/maths/mean.ts';
+import { shadedUnder } from '../../src/addons/coarser-mean/maths/shading.ts';
 
 describe('the exponential mean over a run', () => {
     it('starts on the first figure, so a short run still says something', () => {
@@ -48,5 +49,28 @@ describe('holding a coarser figure at each drawn bar', () => {
 
     it('gives one figure per drawn bar', () => {
         expect(heldPerBar(new Int32Array(7).fill(0), [1])).toHaveLength(7);
+    });
+});
+
+describe('which pair of lines the shading fills', () => {
+    it('reaches the low line for the whole spread', () => {
+        expect(shadedUnder('high-low')).toBe(2);
+    });
+
+    it('reaches only the close line for the upper half', () => {
+        // The two are different readings of "the zone", and picking one for the
+        // reader was a guess about what they were looking at.
+        expect(shadedUnder('high-close')).toBe(1);
+    });
+
+    it('fills nothing when it is off', () => {
+        expect(shadedUnder('none')).toBeNull();
+    });
+
+    it('fills nothing for a value no control could produce', () => {
+        // A setting outlives the control that wrote it, so a value from an
+        // older version has to land somewhere safe rather than shade a series
+        // the plan does not have.
+        expect(shadedUnder('everything')).toBeNull();
     });
 });

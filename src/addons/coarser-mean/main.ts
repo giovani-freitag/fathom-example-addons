@@ -1,4 +1,4 @@
-import { Plot, readChoice, readSetting, readSessions } from 'fathom';
+import { inWords, Plot, readChoice, readSetting, readSessions } from 'fathom';
 import type {
     ChoiceParameter,
     Indicator,
@@ -10,6 +10,7 @@ import type {
     SourceRequest,
 } from 'fathom';
 import { exponentialMean, heldPerBar } from './maths/mean.js';
+import { HIGH, shadedUnder, SHADINGS } from './maths/shading.js';
 
 /**
  * The rungs a venue publishes candles on, by what the control calls them.
@@ -51,8 +52,26 @@ const PERIOD: NumericParameter = {
     maximum: 200,
 };
 
+/*
+ * Which pair of lines the shading fills, if any.
+ *
+ * Plain values, because a choice stores the value itself and one that changed
+ * with the language would lose the reader's setting. `high-low` fills the whole
+ * spread and `high-close` only its upper half — which of the two reads as "the
+ * zone" depends on what the reader is looking for, so both are offered rather
+ * than one of them guessed at.
+ */
+const SHADE: ChoiceParameter = {
+    name: 'shade',
+    label: 'Shading',
+    kind: 'choice',
+    defaultValue: SHADINGS[0],
+    choices: SHADINGS,
+};
+
 /** The name the rung is declared and read back under. */
 const HELD = 'coarser';
+
 
 /**
  * How much of the rung to fetch, as a multiple of the period.
@@ -77,8 +96,8 @@ const REACH_MULTIPLE = 8;
  * Add a copy per timeframe: each keeps its own rung and period.
  */
 export default class CoarserMean implements Indicator {
-    readonly label = 'Coarser mean';
-    readonly parameters = [RUNG, PERIOD];
+    readonly label = inWords({ en: 'Coarser mean', 'pt-BR': 'Média de outro tempo' });
+    readonly parameters = [RUNG, PERIOD, SHADE];
 
     resolveSources(settings: IndicatorSettings): SourceRequest {
         const period = readSetting(settings, PERIOD);
@@ -100,10 +119,20 @@ export default class CoarserMean implements Indicator {
             heldPerBar(held.indexPerBar, exponentialMean(held.closed.map(figure), period))
         );
 
-        return Plot.over(input.bars)
+        const plan = Plot.over(input.bars)
             .line(meanOf((bar) => bar.highPrice), 'High')
             .line(meanOf((bar) => bar.closePrice), 'Close')
-            .line(meanOf((bar) => bar.lowPrice), 'Low')
+            .line(meanOf((bar) => bar.lowPrice), 'Low');
+
+        // Left to take the upper line's tone rather than given one: a reader
+        // with a copy per timeframe tells them apart by colour, and a shading
+        // in some other colour would break the one thing holding a set together.
+        const under = shadedUnder(readChoice(input.settings, SHADE));
+        if (under !== null) {
+            plan.shading(HIGH, under);
+        }
+
+        return plan
             .summarisedAs(`${String(period)}, ${readChoice(input.settings, RUNG)}`)
             // A mean weighted across more closes than it was given has not
             // settled on anything. Said rather than drawn plain: a line that
@@ -113,3 +142,4 @@ export default class CoarserMean implements Indicator {
             .overThePrice();
     }
 }
+
