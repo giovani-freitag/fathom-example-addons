@@ -1,6 +1,6 @@
 {
     "name": "fathom-addons",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": true,
     "type": "module",
     "description": "Indicators for Fathom, installed from a repository. Worked examples, source and all.",

@@ -1,0 +1,46 @@
+name: release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# The version, the changelog and the tag are all read off the commit subjects,
+# so `feat:` and `fix:` are the only two that move anything.
+jobs:
+  propose:
+    runs-on: ubuntu-latest
+    outputs:
+      released: ${{ steps.please.outputs.release_created }}
+      tag: ${{ steps.please.outputs.tag_name }}
+    steps:
+      - id: please
+        uses: googleapis/release-please-action@v5
+        with:
+          release-type: node
+
+  # The README sends a reader to a release for a one-file addon, so a release
+  # with nothing attached to it is a broken instruction. Built here rather than
+  # taken from the check run: what is published has to come from the tag.
+  attach:
+    needs: propose
+    if: needs.propose.outputs.released == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.propose.outputs.tag }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:bundles
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload "${{ needs.propose.outputs.tag }}" dist/bundles/*.fathom.json --clobber

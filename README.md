@@ -129,4 +129,6 @@ export default class Midpoint implements Indicator {
 ```
 
 Pull requests welcome, as long as `npm run check` passes and the addon teaches
-something these two do not.
+something these two do not. Commit subjects are
+[Conventional Commits](https://www.conventionalcommits.org) — `feat:` and `fix:`
+are what cut the next release and put the one-file bundles on it.
