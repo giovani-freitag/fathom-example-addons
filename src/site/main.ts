@@ -5,8 +5,15 @@
  * one file with nothing to wait for and cannot drift from what is committed.
  */
 
-/** Where the repository lives, which is what Fathom is given to open. */
-const REPOSITORY = 'gh/giovani-freitag/fathom-example-addons';
+/**
+ * Where the repository lives, which is what Fathom is given to open.
+ *
+ * Pinned to the branch. Asked without a ref, Fathom resolves to the newest
+ * release — which is a frozen copy of whatever the layout was when it was cut,
+ * and these are examples meant to match the Fathom they are checked against
+ * rather than the one they were checked against last time a version was named.
+ */
+const REPOSITORY = 'gh/giovani-freitag/fathom-example-addons@main';
 
 const SOURCES: Record<string, string> = import.meta.glob('../addons/**/*.ts', {
     query: '?raw',
