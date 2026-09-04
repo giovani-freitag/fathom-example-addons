@@ -6,7 +6,7 @@
  */
 
 /** Where the repository lives, which is what Fathom is given to open. */
-const REPOSITORY = 'gh/giovani-freitag/fathom-readings';
+const REPOSITORY = 'gh/giovani-freitag/fathom-addons';
 
 const SOURCES: Record<string, string> = import.meta.glob('../readings/**/*.ts', {
     query: '?raw',

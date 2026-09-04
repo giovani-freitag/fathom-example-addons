@@ -1,130 +1,111 @@
-<h1 align="center">Fathom readings</h1>
+<h1 align="center">Fathom addons</h1>
 
 <p align="center">
-  <strong>Indicators you write in the page, not plugins you install.</strong><br>
-  A <em>reading</em> is a TypeScript file that draws on
-  <a href="https://github.com/giovani-freitag/fathom">Fathom</a>'s chart. It
-  compiles as you type, redraws on every bar, and never leaves your browser.
-  These are worked examples of the real thing.
+  <strong>Indicators for <a href="https://github.com/giovani-freitag/fathom">Fathom</a>, installed from a repository.</strong><br>
+  Paste an address, see exactly what it holds, and it opens in the chart's own
+  editor — source and all, yours to change. These are the worked ones.
 </p>
 
 <p align="center">
-  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-3178c6">
+  <img alt="MIT" src="https://img.shields.io/badge/license-MIT-2bd4a8">
   ·
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-2bd4a8">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-3178c6">
   ·
   <img alt="Vite" src="https://img.shields.io/badge/Vite-rolldown-a259ff">
   ·
-  <img alt="Checked" src="https://github.com/giovani-freitag/fathom-readings/actions/workflows/check.yml/badge.svg">
+  <img alt="Checked against Fathom" src="https://github.com/giovani-freitag/fathom-addons/actions/workflows/check.yml/badge.svg">
 </p>
 
 <p align="center">
-  <strong>Open one in Fathom — press <em>Write a reading</em>, then the cloud button, and paste:</strong><br>
-  <code>gh/giovani-freitag/fathom-readings/readings/pressure</code>
+  <strong>Press <em>Write a reading</em>, then the cloud button, and paste:</strong><br>
+  <code>gh/giovani-freitag/fathom-addons/readings/pressure</code>
 </p>
 
 <p align="center">
-  <a href="https://giovani-freitag.github.io/fathom-readings/"><strong>Or browse them all →</strong></a><br>
-  <sub>Every file, as it is committed.</sub>
+  <a href="https://giovani-freitag.github.io/fathom-addons/"><strong>Or read them here first →</strong></a><br>
+  <sub>Both files of both addons, on one page.</sub>
 </p>
 
 <p align="center">
-  <img src="docs/screenshot.png" alt="A reading drawing on the Fathom chart, its source in the editor beside it" width="100%">
+  <img src="docs/screenshot.png" alt="The pressure addon drawing under the Fathom chart, its source in the editor beside it" width="100%">
 </p>
 
-Fathom shows you every file and where it came from before it fetches any of it.
-What arrives is a draft, marked unsaved — nothing is filed until you file it.
+Nothing installs itself. Fathom lists the files, where they came from and how
+large before it fetches a byte, then checks each one against the hash the
+listing gave. What arrives is a draft in your editor, marked unsaved.
 
-## 📖 The readings
+## 📖 What is here
 
 ### 🌡️ [`pressure`](readings/pressure) — buying against selling, bar by bar
 
-Normalised delta: `(buy − sell) ÷ (buy + sell)`, so a quiet hour and a busy one
-are comparable. Split rising and falling about zero, in its own band under the
-chart — the green and red strip in the shot above.
+`(buy − sell) ÷ (buy + sell)` per bar, so a quiet hour and a busy one are
+comparable, smoothed over a window you choose. Green above zero and red below,
+in its own band under the chart — the strip in the shot above.
 
-**Shows you:** a reading across two files · a numeric knob and a switch · warm-up
-bars declared and fetched · `NaN` to break a line honestly · its own band.
+**Read it for:** an addon across two files · a numeric knob and a switch ·
+warm-up bars declared so the left edge is not blank · `NaN` where there is no
+honest answer.
 
 ### 🕰️ [`yesterday`](readings/yesterday) — where the last session opened, closed and turned
 
-Four levels from the previous day or week, drawn over the price with the range
+The previous day's or week's four levels, drawn over the price with the range
 shaded between them.
 
-**Shows you:** a coarser session declared and read back · the alignment that
+**Read it for:** a coarser session declared and read back · the alignment that
 makes repainting impossible · a choice parameter · shading between two series ·
 saying you have nothing to draw yet.
 
-## 🚀 Open one
-
-Three ways in, easiest first:
+## 🚀 Three ways in
 
 | | |
 |---|---|
-| **From here** | Paste `gh/giovani-freitag/fathom-readings/readings/pressure` into the cloud button. An address copied out of GitHub works too. |
-| **From a file** | Grab a `.fathom.json` from a [release](https://github.com/giovani-freitag/fathom-readings/releases) and use the open button. |
-| **By hand** | Open [`main.ts`](readings/pressure/main.ts), copy it, paste it in. Every reading here is one folder and no build step. |
+| **From here** | Paste `gh/giovani-freitag/fathom-addons/readings/pressure` into the cloud button. An address copied out of GitHub works too. |
+| **From a file** | Take a `.fathom.json` from a [release](https://github.com/giovani-freitag/fathom-addons/releases) and use the open button. Same addon, one file. |
+| **By hand** | Open [`main.ts`](readings/pressure/main.ts) and copy it. No build step stands between the source and the chart. |
 
-Every one is heavily commented. They are meant to be read, taken apart, and
-turned into something of your own.
+## 🔍 Why you can trust these
 
-## 🔍 How they are checked
-
-The point of this repository is that nothing in it is a snippet that used to
-work.
+They are typechecked against **Fathom's real surface** — not a copy of it.
+[`fathom`](https://github.com/giovani-freitag/fathom-types) is a dependency of
+this repository, generated out of Fathom's own source, so `import { Plot } from
+'fathom'` here resolves to exactly the declarations the in-page editor compiles
+against.
 
 ```bash
 npm install
 npm run check    # typecheck, lint, test
 ```
 
-`npm run typecheck` runs `tsc` over the readings against **Fathom's real type
-surface** — the same declarations its in-page editor compiles against, generated
-straight out of its source and kept in [`types/`](types/fathom.d.ts). A reading
-here does not merely look right; it compiles against the thing that will run it.
+CI runs it on every push. An addon that stopped compiling against Fathom cannot
+sit here looking fine.
 
-`npm run types:check` fails if that copy is not the surface Fathom currently
-offers, so it cannot quietly go stale; `npm run types:refresh` brings it
-forward. Both run in CI on every push.
-
-> Vendored rather than installed, for now. Fathom is an application, and taking
-> it as a dependency for one declaration file drags its whole runtime — a
-> hundred packages — behind it. It becomes
-> `npm i -D @giovani-freitag/fathom` the moment that types-only package is
-> published.
-
-`npm run test` covers the arithmetic that has a right answer. `npm run lint`
-holds the readings to the same bar as the rest — this is code somebody reads to
-learn from.
-
-## 🛠️ Working on these
+## 🛠️ Working on them
 
 ```bash
-npm run dev      # browse the readings, source and all
-npm run build    # bundles into dist/bundles, the browse page into dist
+npm run dev      # read them in the browser, source and all
+npm run build    # bundles into dist/bundles, the page into dist
 ```
 
-Node 22 or newer. `build:bundles` runs TypeScript directly, with no build step
-of its own.
+Node 22 or newer.
 
-**What is built, and what is not.** The readings are not compiled here. A
-reading is TypeScript that Fathom's own in-page compiler reads, so shipping
-JavaScript would produce something the editor could not show and nobody could
-learn from. The build produces `dist/bundles/*.fathom.json` — every file of a
-reading under one envelope, so one can be handed over as a single file — and the
-page that browses them, bundled by Vite 8, which bundles with Rolldown.
+**The addons are not compiled here, on purpose.** An addon is TypeScript that
+Fathom's in-page compiler reads; shipping JavaScript would produce something the
+editor could not show and nobody could learn from. The build produces
+`dist/bundles/*.fathom.json` — every file of an addon under one envelope — and
+the page that reads them, bundled by Vite 8, which bundles with Rolldown.
 
 ## ✏️ Writing your own
 
-Start from
-[**Writing a reading**](https://github.com/giovani-freitag/fathom/blob/main/docs/writing-a-reading.md)
-— from the smallest reading that works to the parts you reach for last.
+The [**guide**](https://giovani-freitag.github.io/fathom/guide/writing-a-reading)
+goes from the smallest addon that draws to the parts you reach for last, and the
+[**API reference**](https://giovani-freitag.github.io/fathom/guide/api/) is
+generated from the same types this repository is checked against.
 
 The whole of it in four lines:
 
-- A reading starts at `main.ts`, and its default export is the reading.
+- An addon starts at `main.ts`, and its default export is the indicator.
 - It imports from `'fathom'` and from its own files, and from nothing else.
-  **There is no npm inside a reading.**
+  **There is no npm inside an addon.**
 - `compute` is arithmetic and nothing else — no fetching, no timers, nothing
   remembered between calls. It runs again on every bar, pan and zoom.
 - Anything the chart must fetch for you is declared in `resolveSources`.
@@ -147,9 +128,5 @@ export default class Midpoint implements Indicator {
 }
 ```
 
-Pull requests welcome, as long as `npm run check` passes and the reading teaches
-something these do not.
-
-## 📄 Licence
-
-MIT. Take these apart.
+Pull requests welcome, as long as `npm run check` passes and the addon teaches
+something these two do not.
