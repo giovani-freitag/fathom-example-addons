@@ -18,7 +18,7 @@
 
 <p align="center">
   <strong>Press <em>Write a reading</em>, then the cloud button, and paste:</strong><br>
-  <code>gh/giovani-freitag/fathom-example-addons@main/src/addons/pressure</code>
+  <code>gh/giovani-freitag/fathom-example-addons/src/addons/pressure</code>
 </p>
 
 <p align="center">
@@ -71,7 +71,7 @@ saying you have nothing to draw yet.
 
 | | |
 |---|---|
-| **From here** | Paste `gh/giovani-freitag/fathom-example-addons@main/src/addons/pressure` into the cloud button. An address copied out of GitHub works too. |
+| **From here** | Paste `gh/giovani-freitag/fathom-example-addons/src/addons/pressure` into the cloud button. An address copied out of GitHub works too. |
 | **From a file** | Take a `.fathom.json` from a [release](https://github.com/giovani-freitag/fathom-example-addons/releases) and use the open button. Same addon, one file. |
 | **By hand** | Open [`main.ts`](src/addons/pressure/main.ts) and copy it. No build step stands between the source and the chart. |
 

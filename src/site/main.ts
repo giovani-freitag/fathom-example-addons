@@ -12,13 +12,13 @@ import type { ShownAddon, ShownFile } from './shown-addon.ts';
 /**
  * Where the repository lives, which is what Fathom is given to open.
  *
- * Pinned to the branch. Asked without a ref, Fathom resolves to the newest
- * release — and jsDelivr serves that index stale for up to an hour, so a reader
- * pasting a bare address in the window after a release gets the layout before
- * it. These are examples meant to match the Fathom they are checked against on
- * every push, which is the branch.
+ * No ref, so Fathom resolves to the newest release. Pinned to the branch
+ * instead, jsDelivr serves the listing with a year of `max-age` — it treats a
+ * branch as immutable — and readers were being handed whichever commit an edge
+ * happened to fetch first. The version index it resolves a bare address through
+ * carries five minutes, and what that names is a tag, which really is immutable.
  */
-const REPOSITORY = 'gh/giovani-freitag/fathom-example-addons@main';
+const REPOSITORY = 'gh/giovani-freitag/fathom-example-addons';
 
 /** How long a button says what it did before going back to its own name. */
 const SAID_FOR_MS = 1_500;
