@@ -23,42 +23,28 @@
                  second by second. Decoration that is also the subject. -->
             <div class="ladder" aria-hidden="true"></div>
             <div class="masthead-inner">
-                <p class="eyebrow">Worked examples</p>
-                <h1>Fathom addons</h1>
-                <p class="lede">
-                    Indicators you can read, take apart and change. Each one is TypeScript
-                    that <a href="https://github.com/giovani-freitag/fathom">Fathom</a>
-                    compiles in the page — no build step stands between this source and the
-                    chart.
-                </p>
+                <p class="eyebrow" data-says="eyebrow">Worked examples</p>
+                <h1 data-says="title">Fathom addons</h1>
+                <p class="lede" data-says="lede"></p>
                 <nav aria-label="Elsewhere">
-                    <a class="go" href="https://giovani-freitag.github.io/fathom/">Open the chart</a>
-                    <a href="https://giovani-freitag.github.io/fathom/guide/writing-a-reading">
-                        Write your own
-                    </a>
-                    <a href="https://github.com/giovani-freitag/fathom-example-addons">Source</a>
+                    <a class="go" href="https://giovani-freitag.github.io/fathom/"
+                       data-says="openTheChart">Open the chart</a>
+                    <a id="guide" href="https://giovani-freitag.github.io/fathom/guide/writing-a-reading"
+                       data-says="writeYourOwn">Write your own</a>
+                    <a href="https://github.com/giovani-freitag/fathom-example-addons"
+                       data-says="source">Source</a>
+                    <button type="button" id="language" class="language"></button>
                 </nav>
             </div>
         </header>
 
         <main id="page">
             <section id="how" aria-labelledby="how-title">
-                <h2 id="how-title">Three ways in</h2>
+                <h2 id="how-title" data-says="threeWaysIn">Three ways in</h2>
                 <ol class="ways">
-                    <li>
-                        <strong>Paste the address.</strong> In the chart, press
-                        <em>Write a reading</em>, then the cloud button. Fathom lists every
-                        file and its size before it fetches a byte.
-                    </li>
-                    <li>
-                        <strong>Take the one file.</strong> Each
-                        <a href="https://github.com/giovani-freitag/fathom-example-addons/releases">release</a>
-                        carries a <code>.fathom.json</code> per addon, for the open button.
-                    </li>
-                    <li>
-                        <strong>Copy it by hand.</strong> The source is below, whole. That is
-                        what runs.
-                    </li>
+                    <li><strong data-says="wayPasteTitle"></strong> <span data-says="wayPasteBody"></span></li>
+                    <li><strong data-says="wayFileTitle"></strong> <span data-says="wayFileBody"></span></li>
+                    <li><strong data-says="wayHandTitle"></strong> <span data-says="wayHandBody"></span></li>
                 </ol>
             </section>
 
@@ -66,10 +52,7 @@
         </main>
 
         <footer id="foot">
-            <p>
-                MIT. Take these apart — an addon that teaches something these do not is
-                <a href="https://github.com/giovani-freitag/fathom-example-addons">welcome</a>.
-            </p>
+            <p data-says="footer"></p>
         </footer>
         <script type="module" src="./src/site/main.ts"></script>
     </body>

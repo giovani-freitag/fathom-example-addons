@@ -109,6 +109,22 @@ h1 {
 
 #masthead nav a:hover { border-color: var(--phosphor-dim); color: var(--phosphor); }
 
+/* The only control in a row of links, so it says so by being one. */
+.language {
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--hairline-bright);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink-400);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.875rem;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.language:hover { border-color: var(--phosphor-dim); color: var(--phosphor); }
+.language:focus-visible { outline: 2px solid var(--phosphor); outline-offset: 2px; }
+
 #masthead nav .go {
     border-color: var(--phosphor-dim);
     background: rgb(53 224 196 / 10%);

@@ -1,5 +1,6 @@
 import { ADDONS } from 'virtual:addons';
 import type { ShownAddon, ShownFile } from './shown-addon.ts';
+import { type Language, openingLanguage, say, sayTechnique } from './words.ts';
 
 /**
  * The page that browses the addons.
@@ -20,18 +21,71 @@ import type { ShownAddon, ShownFile } from './shown-addon.ts';
  */
 const REPOSITORY = 'gh/giovani-freitag/fathom-example-addons';
 
+/** The same repository, as a browser reaches it. */
+const REPOSITORY_URL = 'https://github.com/giovani-freitag/fathom-example-addons';
+
 /** How long a button says what it did before going back to its own name. */
 const SAID_FOR_MS = 1_500;
 
+/** Where the reader's choice of language is kept, so a reload holds it. */
+const LANGUAGE_SLOT = 'fathom.addons.language';
+
+let language: Language = openingLanguage();
+
 function render(): void {
+    document.documentElement.lang = language;
+    renderChrome();
+
     const into = document.querySelector('#addons');
     if (into === null) {
         return;
     }
 
+    into.replaceChildren();
     for (const addon of ADDONS) {
         into.append(cardFor(addon));
     }
+}
+
+/**
+ * Everything the page says about itself, filled from the dictionary.
+ *
+ * The markup carries the key rather than the words, so the two languages cannot
+ * drift into two different pages.
+ */
+function renderChrome(): void {
+    const links = {
+        fathom: link('https://github.com/giovani-freitag/fathom', 'Fathom'),
+        writeAReading: `<em>${say(language, 'writeAReading')}</em>`,
+        release: link(`${REPOSITORY_URL}/releases`, say(language, 'release')),
+        bundle: '<code>.fathom.json</code>',
+        welcome: link(REPOSITORY_URL, say(language, 'welcome')),
+    };
+
+    for (const node of document.querySelectorAll<HTMLElement>('[data-says]')) {
+        const key = node.dataset['says'] as Parameters<typeof say>[1];
+        // Markup rather than text, and only here: every one of these strings is
+        // this repository's own, and the only tags in them are the links above.
+        node.innerHTML = say(language, key, links);
+    }
+
+    const button = document.querySelector<HTMLButtonElement>('#language');
+    if (button !== null) {
+        button.textContent = language === 'en' ? 'Português' : 'English';
+        button.setAttribute('aria-label', say(language, 'inLanguage'));
+    }
+
+    const guide = document.querySelector<HTMLAnchorElement>('#guide');
+    if (guide !== null) {
+        guide.href = language === 'en'
+            ? 'https://giovani-freitag.github.io/fathom/guide/writing-a-reading'
+            : 'https://giovani-freitag.github.io/fathom/guide/pt-BR/writing-a-reading';
+    }
+}
+
+/** One anchor, as the markup a phrase drops it into. */
+function link(href: string, text: string): string {
+    return `<a href="${href}">${text}</a>`;
 }
 
 function cardFor(addon: ShownAddon): HTMLElement {
@@ -66,11 +120,11 @@ function headOf(addon: ShownAddon, spec: string): HTMLElement {
 function chipsOf(teaches: readonly string[]): HTMLElement {
     const list = document.createElement('ul');
     list.className = 'teaches';
-    list.setAttribute('aria-label', 'What it shows');
+    list.setAttribute('aria-label', say(language, 'whatItShows'));
 
     for (const says of teaches) {
         const chip = document.createElement('li');
-        chip.textContent = says;
+        chip.textContent = sayTechnique(language, says);
         list.append(chip);
     }
 
@@ -85,7 +139,7 @@ function addressRow(spec: string): HTMLElement {
     const shown = document.createElement('code');
     shown.textContent = spec;
 
-    row.append(shown, copyButton(spec, 'Copy address', 'Copy'));
+    row.append(shown, copyButton(spec, say(language, 'copyAddress'), say(language, 'copy')));
     return row;
 }
 
@@ -116,7 +170,7 @@ function fileBlock(file: ShownFile): HTMLElement {
     path.textContent = file.path;
     const lines = document.createElement('span');
     lines.className = 'lines';
-    lines.textContent = `${String(file.lineCount)} lines`;
+    lines.textContent = say(language, 'lines', { count: String(file.lineCount) });
     summary.append(path, lines);
 
     const source = document.createElement('div');
@@ -126,7 +180,11 @@ function fileBlock(file: ShownFile): HTMLElement {
     // request could reach.
     source.innerHTML = file.html;
 
-    block.append(summary, source, copyButton(textIn(source), `Copy ${file.path}`, 'Copy file'));
+    block.append(summary, source, copyButton(
+        textIn(source),
+        say(language, 'copyFile', { path: file.path }),
+        say(language, 'copyFile', { path: file.path }),
+    ));
     return block;
 }
 
@@ -143,8 +201,8 @@ function copyButton(text: string, label: string, said: string): HTMLButtonElemen
     button.setAttribute('aria-label', label);
     button.addEventListener('click', () => {
         void navigator.clipboard.writeText(text).then(
-            () => { says(button, 'Copied', said); },
-            () => { says(button, 'Copy it by hand', said); },
+            () => { says(button, say(language, 'copied'), said); },
+            () => { says(button, say(language, 'copyByHand'), said); },
         );
     });
 
@@ -160,5 +218,15 @@ function says(button: HTMLButtonElement, text: string, was: string): void {
         button.classList.remove('said');
     }, SAID_FOR_MS);
 }
+
+document.querySelector('#language')?.addEventListener('click', () => {
+    language = language === 'en' ? 'pt-BR' : 'en';
+    try {
+        globalThis.localStorage?.setItem(LANGUAGE_SLOT, language);
+    } catch {
+        // A browser told to keep no site data. The choice lasts this visit.
+    }
+    render();
+});
 
 render();
