@@ -17,6 +17,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # `npm run check` starts by confirming the vendored surface is the one
+      # Fathom offers, so a reading cannot pass against a copy that has moved on.
       - run: npm run check
       - run: npm run build
       - uses: actions/upload-artifact@v4

@@ -17,11 +17,12 @@
         "build": "npm run build:bundles && vite build",
         "build:bundles": "node --experimental-strip-types scripts/bundle-readings.ts",
         "preview": "vite preview",
-        "check": "npm run typecheck && npm run lint && npm run test",
+        "check": "npm run types:check && npm run typecheck && npm run lint && npm run test",
         "typecheck": "tsc --noEmit",
         "lint": "eslint .",
         "test": "vitest run",
-        "types:refresh": "node ../fathom/scripts/build-addon-types.mjs --dts types/fathom.d.ts"
+        "types:refresh": "node --experimental-strip-types scripts/refresh-types.ts",
+        "types:check": "node --experimental-strip-types scripts/check-types-drift.ts"
     },
     "devDependencies": {
         "@eslint/js": "^9.39.0",

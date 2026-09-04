@@ -80,8 +80,18 @@ npm run check    # typecheck, lint, test
 
 `npm run typecheck` runs `tsc` over the readings against **Fathom's real type
 surface** — the same declarations its in-page editor compiles against, generated
-straight out of its source. A reading here does not merely look right; it
-compiles against the thing that will run it. CI runs this on every push.
+straight out of its source and kept in [`types/`](types/fathom.d.ts). A reading
+here does not merely look right; it compiles against the thing that will run it.
+
+`npm run types:check` fails if that copy is not the surface Fathom currently
+offers, so it cannot quietly go stale; `npm run types:refresh` brings it
+forward. Both run in CI on every push.
+
+> Vendored rather than installed, for now. Fathom is an application, and taking
+> it as a dependency for one declaration file drags its whole runtime — a
+> hundred packages — behind it. It becomes
+> `npm i -D @giovani-freitag/fathom` the moment that types-only package is
+> published.
 
 `npm run test` covers the arithmetic that has a right answer. `npm run lint`
 holds the readings to the same bar as the rest — this is code somebody reads to

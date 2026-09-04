@@ -6,6 +6,10 @@
         "moduleResolution": "bundler",
         "types": ["vite/client", "node"],
 
+        // Where `import … from 'fathom'` resolves. The same line the published
+        // package asks for, pointed at the vendored copy until it is on npm.
+        "paths": { "fathom": ["./types/fathom.d.ts"] },
+
         "strict": true,
         "noUncheckedIndexedAccess": true,
         "noImplicitOverride": true,
