@@ -27,7 +27,7 @@
         "@stylistic/eslint-plugin": "^5.10.0",
         "@types/node": "^22.19.0",
         "eslint": "^9.39.0",
-        "fathom": "github:giovani-freitag/fathom-types",
+        "fathom": "github:giovani-freitag/fathom#feat/addon-editor",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.69.0",
         "vite": "^8.2.2",

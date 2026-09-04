@@ -66,10 +66,10 @@ saying you have nothing to draw yet.
 ## 🔍 Why you can trust these
 
 They are typechecked against **Fathom's real surface** — not a copy of it.
-[`fathom`](https://github.com/giovani-freitag/fathom-types) is a dependency of
-this repository, generated out of Fathom's own source, so `import { Plot } from
-'fathom'` here resolves to exactly the declarations the in-page editor compiles
-against.
+[Fathom itself](https://github.com/giovani-freitag/fathom) is a dependency of
+this repository, and it packs nothing but the declarations its own build
+generates, so `import { Plot } from 'fathom'` here resolves to exactly what the
+in-page editor compiles against. One source of truth, no copy to keep current.
 
 ```bash
 npm install
