@@ -14,11 +14,16 @@ import { exponentialMean, heldPerBar } from './maths/mean.js';
 /**
  * The rungs a venue publishes candles on, by what the control calls them.
  *
+ * A rung finer than the one being drawn is allowed and useless: its mean would
+ * be the drawn bars' own, arrived at the long way round. The list is what the
+ * venue publishes, and choosing sensibly from it is the reader's.
+ *
  * No monthly: this is keyed by a width in milliseconds, and a month has no
  * fixed one. A calendar month needs a rung anchored to the calendar rather
  * than to a width, which the surface does not offer.
  */
 const RUNGS: Readonly<Record<string, number>> = {
+    '1m': 60_000,
     '5m': 300_000,
     '15m': 900_000,
     '30m': 1_800_000,
