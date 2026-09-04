@@ -1,0 +1,109 @@
+/*
+ * The chart's own palette, dark only. This page is read beside Fathom, and a
+ * white one beside it reads as somewhere else entirely.
+ */
+:root {
+    --abyss-900: #05080c;
+    --abyss-850: #080d14;
+    --abyss-800: #0a1019;
+    --hairline: #1b2836;
+    --ink-100: #dce7f1;
+    --ink-300: #9db0c2;
+    --ink-400: #7d92a6;
+    --ink-500: #6a8093;
+    --phosphor: #35e0c4;
+    color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--abyss-900);
+    color: var(--ink-100);
+    font: 400 15px/1.6 ui-sans-serif, system-ui, sans-serif;
+}
+
+#page {
+    margin: 0 auto;
+    max-width: 62rem;
+    padding: 3rem 1.25rem 6rem;
+}
+
+h1 { margin: 0 0 0.5rem; font-size: 1.75rem; letter-spacing: -0.01em; }
+header p { margin: 0 0 2.5rem; color: var(--ink-300); max-width: 44rem; }
+a { color: var(--phosphor); }
+
+article {
+    margin-bottom: 2rem;
+    border: 1px solid var(--hairline);
+    border-radius: 0.75rem;
+    background: var(--abyss-850);
+    overflow: hidden;
+}
+
+article > header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--hairline);
+}
+
+h2 { margin: 0; font-size: 1.05rem; }
+article > header p { margin: 0; color: var(--ink-400); font-size: 0.875rem; }
+
+.spec {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--abyss-800);
+}
+
+.spec code {
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    color: var(--ink-300);
+    font: 400 0.8125rem/1.5 ui-monospace, monospace;
+    white-space: nowrap;
+}
+
+button {
+    border: 1px solid var(--hairline);
+    border-radius: 0.375rem;
+    padding: 0.3rem 0.7rem;
+    background: var(--abyss-850);
+    color: var(--ink-300);
+    font: inherit;
+    font-size: 0.8125rem;
+    cursor: pointer;
+}
+
+button:hover { border-color: var(--phosphor); color: var(--phosphor); }
+
+details { border-top: 1px solid var(--hairline); }
+details:first-of-type { border-top: 0; }
+
+summary {
+    padding: 0.6rem 1.25rem;
+    color: var(--ink-400);
+    font: 400 0.8125rem/1.5 ui-monospace, monospace;
+    cursor: pointer;
+}
+
+summary:hover { color: var(--ink-100); }
+
+pre {
+    margin: 0;
+    padding: 0 1.25rem 1.25rem;
+    overflow-x: auto;
+    color: var(--ink-300);
+    font: 400 0.8125rem/1.65 ui-monospace, monospace;
+    tab-size: 4;
+}
+
+footer { margin-top: 3rem; color: var(--ink-500); font-size: 0.875rem; }

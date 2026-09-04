@@ -1,0 +1,36 @@
+{
+    "name": "fathom-readings",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "description": "Worked example indicators for Fathom, written against its in-page editor",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/giovani-freitag/fathom-readings.git"
+    },
+    "engines": {
+        "node": ">=22"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "npm run build:bundles && vite build",
+        "build:bundles": "node --experimental-strip-types scripts/bundle-readings.ts",
+        "preview": "vite preview",
+        "check": "npm run typecheck && npm run lint && npm run test",
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint .",
+        "test": "vitest run",
+        "types:refresh": "node ../fathom/scripts/build-addon-types.mjs --dts types/fathom.d.ts"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.39.0",
+        "@stylistic/eslint-plugin": "^5.10.0",
+        "@types/node": "^22.19.0",
+        "eslint": "^9.39.0",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.69.0",
+        "vite": "^8.2.2",
+        "vitest": "^4.1.11"
+    }
+}
