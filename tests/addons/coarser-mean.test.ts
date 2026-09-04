@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { exponentialMean, heldPerBar } from '../readings/coarser-mean/maths/mean.ts';
+import { exponentialMean, heldPerBar } from '../../src/addons/coarser-mean/maths/mean.ts';
 
 describe('the exponential mean over a run', () => {
     it('starts on the first figure, so a short run still says something', () => {

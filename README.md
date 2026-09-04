@@ -1,4 +1,4 @@
-<h1 align="center">Fathom addons</h1>
+<h1 align="center">Fathom example addons</h1>
 
 <p align="center">
   <strong>Indicators for <a href="https://github.com/giovani-freitag/fathom">Fathom</a>, installed from a repository.</strong><br>
@@ -13,16 +13,16 @@
   ·
   <img alt="Vite" src="https://img.shields.io/badge/Vite-rolldown-a259ff">
   ·
-  <img alt="Checked against Fathom" src="https://github.com/giovani-freitag/fathom-addons/actions/workflows/check.yml/badge.svg">
+  <img alt="Checked against Fathom" src="https://github.com/giovani-freitag/fathom-example-addons/actions/workflows/check.yml/badge.svg">
 </p>
 
 <p align="center">
   <strong>Press <em>Write a reading</em>, then the cloud button, and paste:</strong><br>
-  <code>gh/giovani-freitag/fathom-addons/readings/pressure</code>
+  <code>gh/giovani-freitag/fathom-example-addons/src/addons/pressure</code>
 </p>
 
 <p align="center">
-  <a href="https://giovani-freitag.github.io/fathom-addons/"><strong>Or read them here first →</strong></a><br>
+  <a href="https://giovani-freitag.github.io/fathom-example-addons/"><strong>Or read them here first →</strong></a><br>
   <sub>Every file of every addon, on one page.</sub>
 </p>
 
@@ -36,7 +36,7 @@ listing gave. What arrives is a draft in your editor, marked unsaved.
 
 ## 📖 What is here
 
-### 🌡️ [`pressure`](readings/pressure) — buying against selling, bar by bar
+### 🌡️ [`pressure`](src/addons/pressure) — buying against selling, bar by bar
 
 `(buy − sell) ÷ (buy + sell)` per bar, so a quiet hour and a busy one are
 comparable, smoothed over a window you choose. Green above zero and red below,
@@ -46,7 +46,7 @@ in its own band under the chart — the strip in the shot above.
 warm-up bars declared so the left edge is not blank · `NaN` where there is no
 honest answer.
 
-### 📐 [`coarser-mean`](readings/coarser-mean) — a mean of another timeframe, drawn over this one
+### 📐 [`coarser-mean`](src/addons/coarser-mean) — a mean of another timeframe, drawn over this one
 
 The 50-period exponential mean of a coarser rung's close, high and low, held at
 each drawn bar until that rung closes again — steps, not slopes, because the
@@ -58,7 +58,7 @@ each with its own rung and period.
 closes · the forward fill that makes repainting impossible · saying the mean has
 not settled instead of drawing a line that will move.
 
-### 🕰️ [`yesterday`](readings/yesterday) — where the last session opened, closed and turned
+### 🕰️ [`yesterday`](src/addons/yesterday) — where the last session opened, closed and turned
 
 The previous day's or week's four levels, drawn over the price with the range
 shaded between them.
@@ -71,9 +71,9 @@ saying you have nothing to draw yet.
 
 | | |
 |---|---|
-| **From here** | Paste `gh/giovani-freitag/fathom-addons/readings/pressure` into the cloud button. An address copied out of GitHub works too. |
-| **From a file** | Take a `.fathom.json` from a [release](https://github.com/giovani-freitag/fathom-addons/releases) and use the open button. Same addon, one file. |
-| **By hand** | Open [`main.ts`](readings/pressure/main.ts) and copy it. No build step stands between the source and the chart. |
+| **From here** | Paste `gh/giovani-freitag/fathom-example-addons/src/addons/pressure` into the cloud button. An address copied out of GitHub works too. |
+| **From a file** | Take a `.fathom.json` from a [release](https://github.com/giovani-freitag/fathom-example-addons/releases) and use the open button. Same addon, one file. |
+| **By hand** | Open [`main.ts`](src/addons/pressure/main.ts) and copy it. No build step stands between the source and the chart. |
 
 ## 🔍 Why you can trust these
 

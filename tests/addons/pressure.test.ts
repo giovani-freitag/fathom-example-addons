@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { leanOf, rollingMean } from '../readings/pressure/maths/pressure.ts';
+import { leanOf, rollingMean } from '../../src/addons/pressure/maths/pressure.ts';
 import type { PriceBar } from 'fathom';
 
 /** A bar with only the two figures the lean is made of. */
