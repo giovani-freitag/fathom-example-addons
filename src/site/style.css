@@ -1,109 +1,309 @@
 /*
- * The chart's own palette, dark only. This page is read beside Fathom, and a
- * white one beside it reads as somewhere else entirely.
+ * The chart's own palette and its monospace, dark only.
+ *
+ * This page is read beside Fathom and links straight into it, so a page in
+ * another set of colours reads as somewhere else entirely. Dark only for the
+ * same reason: the chart has no light mode, because a depth map on white is
+ * not a depth map.
  */
 :root {
     --abyss-900: #05080c;
     --abyss-850: #080d14;
     --abyss-800: #0a1019;
+    --abyss-700: #0e1621;
     --hairline: #1b2836;
+    --hairline-bright: #2a3d50;
     --ink-100: #dce7f1;
     --ink-300: #9db0c2;
     --ink-400: #7d92a6;
     --ink-500: #6a8093;
     --phosphor: #35e0c4;
+    --phosphor-dim: #1c7a6c;
+    --amber: #ffb454;
+    --mono: 'Azeret Mono', ui-monospace, 'SF Mono', monospace;
     color-scheme: dark;
 }
 
-* { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
 
 body {
     margin: 0;
     background: var(--abyss-900);
     color: var(--ink-100);
-    font: 400 15px/1.6 ui-sans-serif, system-ui, sans-serif;
+    font: 400 15px/1.65 ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
-#page {
+a { color: var(--phosphor); text-decoration-color: var(--phosphor-dim); text-underline-offset: 0.2em; }
+a:hover { text-decoration-color: var(--phosphor); }
+
+/* ---- the masthead ------------------------------------------------------ */
+
+#masthead {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--hairline);
+    background: linear-gradient(180deg, var(--abyss-850), var(--abyss-900));
+}
+
+/*
+ * Resting size at every price, thinning upward — the chart's own subject drawn
+ * flat. Repeating gradients rather than an image, so it costs nothing and
+ * follows the palette if the palette moves.
+ */
+.ladder {
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    background:
+        repeating-linear-gradient(
+            180deg,
+            rgb(53 224 196 / 9%) 0 2px,
+            transparent 2px 9px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgb(255 180 84 / 7%) 0 3px,
+            transparent 3px 26px
+        );
+    mask-image: linear-gradient(105deg, transparent 34%, #000 78%, transparent 99%);
+}
+
+.masthead-inner {
+    position: relative;
     margin: 0 auto;
-    max-width: 62rem;
-    padding: 3rem 1.25rem 6rem;
+    max-width: 60rem;
+    padding: 4.5rem 1.5rem 3rem;
 }
 
-h1 { margin: 0 0 0.5rem; font-size: 1.75rem; letter-spacing: -0.01em; }
-header p { margin: 0 0 2.5rem; color: var(--ink-300); max-width: 44rem; }
-a { color: var(--phosphor); }
+.eyebrow {
+    margin: 0 0 0.75rem;
+    color: var(--phosphor);
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
 
-article {
-    margin-bottom: 2rem;
+h1 {
+    margin: 0 0 1rem;
+    font-size: clamp(2rem, 6vw, 3rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+}
+
+.lede { margin: 0 0 1.75rem; max-width: 38rem; color: var(--ink-300); font-size: 1.0625rem; }
+
+#masthead nav { display: flex; flex-wrap: wrap; gap: 0.625rem; }
+
+#masthead nav a {
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--hairline-bright);
+    border-radius: 999px;
+    color: var(--ink-100);
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+#masthead nav a:hover { border-color: var(--phosphor-dim); color: var(--phosphor); }
+
+#masthead nav .go {
+    border-color: var(--phosphor-dim);
+    background: rgb(53 224 196 / 10%);
+    color: var(--phosphor);
+}
+
+#masthead nav .go:hover { background: rgb(53 224 196 / 18%); }
+
+/* ---- the page ---------------------------------------------------------- */
+
+#page { margin: 0 auto; max-width: 60rem; padding: 3rem 1.5rem 4rem; }
+
+#how { margin-bottom: 3.5rem; }
+
+#how h2 {
+    margin: 0 0 1.25rem;
+    color: var(--ink-400);
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.ways {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    list-style: none;
+    counter-reset: way;
+}
+
+.ways li {
+    position: relative;
+    padding: 1.1rem 1.1rem 1.1rem 2.9rem;
+    border: 1px solid var(--hairline);
+    border-radius: 0.625rem;
+    background: var(--abyss-850);
+    color: var(--ink-300);
+    font-size: 0.9375rem;
+}
+
+.ways li::before {
+    position: absolute;
+    top: 1.1rem;
+    left: 1.1rem;
+    color: var(--phosphor-dim);
+    content: counter(way);
+    counter-increment: way;
+    font-family: var(--mono);
+    font-size: 0.8125rem;
+}
+
+.ways strong { display: block; margin-bottom: 0.2rem; color: var(--ink-100); font-weight: 500; }
+.ways em { color: var(--ink-100); font-style: normal; }
+.ways code { font-family: var(--mono); font-size: 0.8125em; }
+
+/* ---- one addon --------------------------------------------------------- */
+
+.addon {
+    margin-bottom: 1.25rem;
     border: 1px solid var(--hairline);
     border-radius: 0.75rem;
     background: var(--abyss-850);
-    overflow: hidden;
+    scroll-margin-top: 1.5rem;
 }
 
-article > header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.5rem 1rem;
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--hairline);
+.addon > header { padding: 1.4rem 1.4rem 1.2rem; }
+
+.addon h2 { margin: 0 0 0.35rem; font-size: 1.25rem; font-weight: 500; letter-spacing: -0.01em; }
+
+.addon h2 a { color: var(--ink-100); font-family: var(--mono); text-decoration: none; }
+.addon h2 a:hover { color: var(--phosphor); }
+
+.about { margin: 0 0 0.9rem; max-width: 46rem; color: var(--ink-300); }
+.about:empty { display: none; }
+
+.teaches { display: flex; margin: 0; padding: 0; flex-wrap: wrap; gap: 0.375rem; list-style: none; }
+
+.teaches li {
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--hairline-bright);
+    border-radius: 0.375rem;
+    color: var(--ink-400);
+    font-family: var(--mono);
+    font-size: 0.6875rem;
 }
 
-h2 { margin: 0; font-size: 1.05rem; }
-article > header p { margin: 0; color: var(--ink-400); font-size: 0.875rem; }
+.teaches:empty { display: none; }
 
-.spec {
+/* ---- the address ------------------------------------------------------- */
+
+.address {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
+    padding: 0.55rem 0.7rem 0.55rem 0.9rem;
+    border-top: 1px solid var(--hairline);
     border-bottom: 1px solid var(--hairline);
-    background: var(--abyss-800);
+    background: var(--abyss-900);
+    gap: 0.75rem;
 }
 
-.spec code {
-    flex: 1;
-    min-width: 0;
+.address code {
     overflow-x: auto;
-    color: var(--ink-300);
-    font: 400 0.8125rem/1.5 ui-monospace, monospace;
+    flex: 1;
+    color: var(--phosphor);
+    font-family: var(--mono);
+    font-size: 0.75rem;
     white-space: nowrap;
 }
 
-button {
-    border: 1px solid var(--hairline);
+.copy {
+    flex-shrink: 0;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--hairline-bright);
     border-radius: 0.375rem;
-    padding: 0.3rem 0.7rem;
-    background: var(--abyss-850);
+    background: var(--abyss-800);
     color: var(--ink-300);
+    cursor: pointer;
     font: inherit;
-    font-size: 0.8125rem;
-    cursor: pointer;
+    font-size: 0.75rem;
+    transition: border-color 0.15s, color 0.15s;
 }
 
-button:hover { border-color: var(--phosphor); color: var(--phosphor); }
+.copy:hover { border-color: var(--phosphor-dim); color: var(--phosphor); }
+.copy:focus-visible { outline: 2px solid var(--phosphor); outline-offset: 2px; }
+.copy.said { border-color: var(--phosphor-dim); color: var(--phosphor); }
 
-details { border-top: 1px solid var(--hairline); }
-details:first-of-type { border-top: 0; }
+/* ---- the files --------------------------------------------------------- */
 
-summary {
-    padding: 0.6rem 1.25rem;
-    color: var(--ink-400);
-    font: 400 0.8125rem/1.5 ui-monospace, monospace;
+.file { border-bottom: 1px solid var(--hairline); }
+.file:last-child { border-bottom: 0; }
+
+.file summary {
+    display: flex;
+    align-items: center;
+    padding: 0.7rem 1rem;
     cursor: pointer;
+    gap: 0.6rem;
+    list-style: none;
 }
 
-summary:hover { color: var(--ink-100); }
+.file summary::-webkit-details-marker { display: none; }
 
-pre {
+/* A caret of its own, because the native one is a bullet on some browsers and
+   an arrow on others, and neither turns. */
+.file summary::before {
+    color: var(--ink-500);
+    content: '▸';
+    font-size: 0.75rem;
+    transition: transform 0.15s;
+}
+
+.file[open] summary::before { transform: rotate(90deg); }
+.file summary:hover { background: var(--abyss-800); }
+.file summary:focus-visible { outline: 2px solid var(--phosphor); outline-offset: -2px; }
+
+.path { color: var(--ink-100); font-family: var(--mono); font-size: 0.8125rem; }
+.lines { color: var(--ink-500); font-family: var(--mono); font-size: 0.6875rem; }
+
+.file .copy { margin: 0 1rem 1rem; }
+
+.source { overflow-x: auto; margin: 0 1rem 0.75rem; border-radius: 0.5rem; }
+
+.source pre {
     margin: 0;
-    padding: 0 1.25rem 1.25rem;
-    overflow-x: auto;
-    color: var(--ink-300);
-    font: 400 0.8125rem/1.65 ui-monospace, monospace;
-    tab-size: 4;
+    padding: 1rem 1.1rem;
+    background: var(--abyss-900) !important;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    line-height: 1.75;
 }
 
-footer { margin-top: 3rem; color: var(--ink-500); font-size: 0.875rem; }
+.source code { display: block; width: max-content; min-width: 100%; }
+
+/* ---- the foot ---------------------------------------------------------- */
+
+#foot {
+    border-top: 1px solid var(--hairline);
+    color: var(--ink-500);
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+#foot p { margin: 0 auto; max-width: 60rem; padding: 2rem 1.5rem; }
+
+@media (max-width: 40rem) {
+    .masthead-inner { padding: 3rem 1.25rem 2.25rem; }
+    #page { padding: 2rem 1.25rem 3rem; }
+    .address { flex-wrap: wrap; }
+    .address code { flex-basis: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+}

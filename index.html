@@ -6,23 +6,71 @@
         <title>Fathom example addons</title>
         <meta
             name="description"
-            content="Indicators for Fathom, installed from a repository. Worked examples, source and all."
+            content="Worked indicators for Fathom, source and all. Paste an address into the chart's own editor, or read them here first."
+        />
+        <meta name="theme-color" content="#05080c" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
         />
         <link rel="stylesheet" href="./src/site/style.css" />
     </head>
     <body>
-        <main id="page">
-            <header>
-                <h1>Fathom example addons</h1>
-                <p>
-                    Indicators for
-                    <a href="https://github.com/giovani-freitag/fathom">Fathom</a>, installed
-                    from a repository. Paste one of the addresses below into the chart's
-                    editor, or read the source here first.
+        <header id="masthead">
+            <!-- The book, as the chart draws it: resting size at every price,
+                 second by second. Decoration that is also the subject. -->
+            <div class="ladder" aria-hidden="true"></div>
+            <div class="masthead-inner">
+                <p class="eyebrow">Worked examples</p>
+                <h1>Fathom addons</h1>
+                <p class="lede">
+                    Indicators you can read, take apart and change. Each one is TypeScript
+                    that <a href="https://github.com/giovani-freitag/fathom">Fathom</a>
+                    compiles in the page — no build step stands between this source and the
+                    chart.
                 </p>
-            </header>
+                <nav aria-label="Elsewhere">
+                    <a class="go" href="https://giovani-freitag.github.io/fathom/">Open the chart</a>
+                    <a href="https://giovani-freitag.github.io/fathom/guide/writing-a-reading">
+                        Write your own
+                    </a>
+                    <a href="https://github.com/giovani-freitag/fathom-example-addons">Source</a>
+                </nav>
+            </div>
+        </header>
+
+        <main id="page">
+            <section id="how" aria-labelledby="how-title">
+                <h2 id="how-title">Three ways in</h2>
+                <ol class="ways">
+                    <li>
+                        <strong>Paste the address.</strong> In the chart, press
+                        <em>Write a reading</em>, then the cloud button. Fathom lists every
+                        file and its size before it fetches a byte.
+                    </li>
+                    <li>
+                        <strong>Take the one file.</strong> Each
+                        <a href="https://github.com/giovani-freitag/fathom-example-addons/releases">release</a>
+                        carries a <code>.fathom.json</code> per addon, for the open button.
+                    </li>
+                    <li>
+                        <strong>Copy it by hand.</strong> The source is below, whole. That is
+                        what runs.
+                    </li>
+                </ol>
+            </section>
+
             <div id="addons"></div>
         </main>
+
+        <footer id="foot">
+            <p>
+                MIT. Take these apart — an addon that teaches something these do not is
+                <a href="https://github.com/giovani-freitag/fathom-example-addons">welcome</a>.
+            </p>
+        </footer>
         <script type="module" src="./src/site/main.ts"></script>
     </body>
 </html>

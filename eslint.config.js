@@ -26,10 +26,10 @@ export default tseslint.config(
         },
     },
     {
-        // A reading is code somebody reads to learn from, so it is held to the
+        // An addon is code somebody reads to learn from, so it is held to the
         // same bar as the rest — but it is written against a surface that hands
         // back plain numbers, and a `readonly parameters = []` is not a mistake.
-        files: ['readings/**/*.ts'],
+        files: ['src/addons/**/*.ts'],
         rules: { '@typescript-eslint/no-unsafe-assignment': 'off' },
     },
 );

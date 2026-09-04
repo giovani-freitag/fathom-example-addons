@@ -1,0 +1,37 @@
+name: publish
+
+# Fired by the release workflow when it cuts a release, and by hand when an
+# upload has to be run again.
+on:
+  repository_dispatch:
+    types: [release-published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: The release to attach the bundles to, as vX.Y.Z
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  attach:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.client_payload.tag || inputs.tag }}
+    steps:
+      # The tag, not the branch. The README sends a reader to a release for a
+      # one-file addon, so what is attached has to be the source that release
+      # names rather than whatever main has moved on to since.
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.client_payload.tag || inputs.tag }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:bundles
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload "$TAG" dist/bundles/*.fathom.json --clobber

@@ -13,34 +13,24 @@ permissions:
 jobs:
   propose:
     runs-on: ubuntu-latest
-    outputs:
-      released: ${{ steps.please.outputs.release_created }}
-      tag: ${{ steps.please.outputs.tag_name }}
     steps:
       - id: please
         uses: googleapis/release-please-action@v5
         with:
           release-type: node
 
-  # The README sends a reader to a release for a one-file addon, so a release
-  # with nothing attached to it is a broken instruction. Built here rather than
-  # taken from the check run: what is published has to come from the tag.
-  attach:
-    needs: propose
-    if: needs.propose.outputs.released == 'true'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v5
+      # Handed to a workflow of its own rather than run as a second job here.
+      # Attaching the bundles is publishing, and publishing that fails should be
+      # something a person can run again on its own — re-running this workflow
+      # would find no new release and do nothing at all.
+      #
+      # `repository_dispatch` rather than the tag push release-please just made:
+      # a push made with the workflow token deliberately triggers nothing, so a
+      # tag trigger would never fire on the releases it was written for. Dispatch
+      # is the one event exempt from that, and same-repo dispatch needs no token
+      # beyond the workflow's own.
+      - if: steps.please.outputs.release_created == 'true'
+        uses: peter-evans/repository-dispatch@v3
         with:
-          ref: ${{ needs.propose.outputs.tag }}
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run build:bundles
-      - env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload "${{ needs.propose.outputs.tag }}" dist/bundles/*.fathom.json --clobber
+          event-type: release-published
+          client-payload: '{"tag": "${{ steps.please.outputs.tag_name }}"}'
