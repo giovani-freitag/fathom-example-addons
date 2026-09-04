@@ -89,6 +89,12 @@ describe('what an addon shows how to do', () => {
         expect(teachesIn(["const S = Params.toggle('isSmoothed');"])).toContain('a switch');
     });
 
+    it('names the shading by the method that actually draws it', () => {
+        // The signal was written against a method name the builder does not
+        // have, so the one addon that shades said nothing about it.
+        expect(teachesIn(['plan.shading(HIGH, LOW);'])).toContain('shading between');
+    });
+
     it('reads every file, not only the entry', () => {
         expect(teachesIn(['export default class A {}', 'const x = bar.buyVolume;']))
             .toContain('the taker split');

@@ -31,7 +31,7 @@ const SIGNALS: readonly Signal[] = [
     { says: 'a histogram', proves: /\.histogram\(/ },
     { says: 'its own band', proves: /\.inItsOwnBand\(/ },
     { says: 'over the price', proves: /\.overThePrice\(/ },
-    { says: 'shading between', proves: /\.shadedBetween\(|\bbands\s*:/ },
+    { says: 'shading between', proves: /\.shading\(|\bbands\s*:/ },
     { says: 'says when it has not settled', proves: /\.converged\(/ },
     { says: 'NaN where there is no answer', proves: /Number\.NaN|\bNaN\b/ },
     { says: 'two languages', proves: /\binWords\(/ },
